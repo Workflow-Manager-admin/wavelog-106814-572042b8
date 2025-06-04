@@ -61,18 +61,19 @@ const WINDS = ['Offshore', 'Onshore', 'Sideshore'];
 const TIDES = ['Low', 'Mid', 'High'];
 
 // ==== HOOKS ====
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * useReminder - Prompts if no session is logged for today and
+ * if the reminder wasn't dismissed for this session (uses sessionStorage).
+ */
 function useReminder(sessions, onPrompt) {
-  /**
-   * Prompts the user if no session is logged for today.
-   * Shows a browser alert as a simple reminder (can be replaced with browser notifications).
-   */
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
-    if (!sessions.some((s) => s.date === today)) {
+    const dismissed = sessionStorage.getItem('surfReminderDismissed');
+    if (!sessions.some((s) => s.date === today) && !dismissed) {
       const reminder = setTimeout(() => {
         onPrompt();
-      }, 1800); // prompt shortly after launch for demo
+      }, 1800); // prompt after launch for demo
       return () => clearTimeout(reminder);
     }
   }, [sessions, onPrompt]);
