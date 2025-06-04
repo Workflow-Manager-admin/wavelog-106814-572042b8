@@ -619,7 +619,7 @@ export default function App() {
   // Try pre-loading the image to check if it exists. If not, use gradient only.
   const heroImageUrl = process.env.PUBLIC_URL + '/assets/ocean-hero.jpg';
 
-  // Inline JS image existence check (run once, result memoized)
+  // Image existence check
   const [oceanImgExists, setOceanImgExists] = useState(true);
   useEffect(() => {
     const img = new window.Image();
@@ -628,9 +628,9 @@ export default function App() {
     img.src = heroImageUrl;
   }, [heroImageUrl]);
 
-  // Prefer the ocean image, fallback to gradient only if not available
+  // Compose a robust visible hero background with image fallback
   const oceanHeroBG = useMemo(() => ({
-    minHeight: '250px',
+    minHeight: '260px',
     width: '100%',
     backgroundImage: oceanImgExists
       ? `linear-gradient(120deg, #002640bb 9%, #016b7fa0 68%, #26A69Aa2 100%), url('${heroImageUrl}')`
@@ -643,7 +643,8 @@ export default function App() {
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    backgroundColor: '#01748C'
+    backgroundColor: '#01748C',
+    boxShadow: '0 4px 22px #02748933, 0 0.5px 2px #01657144'
   }), [heroImageUrl, oceanImgExists]);
 
   // Compose the main screen based on view
@@ -666,7 +667,7 @@ export default function App() {
           position: 'relative',
           minHeight: 320,
           backgroundImage: sectionImgExists
-            ? `linear-gradient(120deg, #003957cc 8%, #026b798e 74%, #1ca8bb2b 100%), url('${sectionBgUrl}')`
+            ? `linear-gradient(120deg, #003957ca 5%, #026b79a4 74%, #22bac780 97%), url('${sectionBgUrl}')`
             : 'linear-gradient(170deg, #4FC3F7 0%, #26A69A 68%, #FFF8E1 100%)',
           backgroundSize: sectionImgExists ? 'cover, cover' : 'cover',
           backgroundPosition: sectionImgExists ? 'center top, center' : 'center',
@@ -674,22 +675,25 @@ export default function App() {
           borderRadius: 19,
           boxShadow: '0 2px 32px #02768a25',
           marginBottom: 16,
+          overflow: 'hidden'
         }}
         aria-label={sectionImgExists ? 'waves background section' : undefined}
       >
-        {/* Overlay for extreme fallback, covered by gradient if no image */}
+        {/* Overlay for visually busy backgrounds, for readable text/buttons */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
             background: sectionImgExists
-              ? 'transparent'
+              ? 'linear-gradient(120deg, #0177bb44 9%, #01445766 60%, #fff0 100%)'
               : 'linear-gradient(120deg, #003957cc 10%, #026b798e 80%, #1ca8bb2b 100%)',
-            zIndex: 0,
+            zIndex: 1,
             borderRadius: 19,
+            pointerEvents: 'none'
           }}
+          aria-hidden="true"
         />
-        <div style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{ position: 'relative', zIndex: 2 }}>
           <SessionList
             sessions={sessions}
             onSelect={openSessionDetail}
@@ -735,16 +739,54 @@ export default function App() {
   return (
     <div className="app">
       <div className="surf-hero-bg" style={oceanHeroBG}>
-        <div className="surf-hero-content">
-          <span className="surf-icon-circle">🌊</span>
-          <span className="surf-title-glow" style={{fontSize:'2.1rem', fontWeight:800, letterSpacing:'.02em'}}>
+        {/* Color overlay for contrast */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 1,
+            background:
+              "linear-gradient(122deg, #01367e88 18%, #15777ecc 90%, #fff0 100%)",
+            opacity: oceanImgExists ? 0.74 : 0.86,
+            pointerEvents: "none"
+          }}
+          aria-hidden="true"
+        />
+        <div className="surf-hero-content" style={{
+          zIndex: 2,
+          color: "#fff",
+          textShadow:
+            "0 4px 22px #034d5fcc, 0 2px 7px #016571c8, 0 1px 1px #013857ba"
+        }}>
+          <span className="surf-icon-circle"
+            style={{
+              boxShadow: "0 1.5px 8px #02768a5c",
+              border: "3px solid #fffdddaa"
+            }}>🌊</span>
+          <span className="surf-title-glow"
+            style={{
+              fontSize: "2.15rem",
+              fontWeight: 900,
+              letterSpacing: ".04em",
+              color: "#fff",
+              textShadow:
+                "0 8px 40px #027f8932, 0 2.5px 3px #003758a8, 0 1px 1px #fff"
+            }}
+          >
             Welcome to SurfSync
           </span>
-          <div style={{fontSize:'1.16rem', color:'#fffde9', marginTop:9, textShadow: '0 2px 8px #025c7799'}}>
+          <div
+            style={{
+              fontSize: "1.18rem",
+              color: "#fffde8",
+              marginTop: 10,
+              fontWeight: 500,
+              textShadow: "0 2.2px 9.5px #025c779d, 0 1px 2px #01456e91"
+            }}
+          >
             Your private surf session log and ocean-inspired dashboard
           </div>
         </div>
-        <div className="surf-hero-overlay" />
       </div>
       <Navbar onGoHome={goHome} onShowStats={openStats} />
       <main>
