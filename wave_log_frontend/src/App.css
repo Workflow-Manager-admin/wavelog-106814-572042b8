@@ -361,8 +361,14 @@ select:focus {
 /* Add a general text shadow for titles/descriptions over busy backgrounds */
 .surf-title-glow {
   color: #fff;
-  text-shadow: 0 4px 26px #027f89bb, 0 .5px 1px #01657173;
-  letter-spacing: .05em;
+  text-shadow:
+    0 3px 22px #017f899f,
+    0 1px 1.5px #027f89bb,
+    0 .5px 1px #016571a3,
+    0 0.5px 2.5px #fff;
+  letter-spacing: .06em;
+  font-weight: 900;
+  font-size: 2.14rem;
 }
 
 /* Ocean blur overlay for extra contrast */
@@ -383,20 +389,23 @@ select:focus {
   inset: 0;
   background: linear-gradient(120deg, #013857f0 10%, #039be5c3 73%, #26a69a88 100%);
   z-index: 1;
-  opacity: 0.82;
+  opacity: 0.85;
   pointer-events: none;
   border-radius: inherit;
 }
-
-/* Used for hero, card overlays, stats panels */
+/* Strongest multi-stop dark overlay (always use .strong for accenting light text/UI over busy bg) */
 .surf-overlay-gradient.strong {
-  opacity: 0.92;
-  background: linear-gradient(114deg, #012b45fa 19%, #26a69ae5 100%);
+  opacity: 0.94;
+  background: linear-gradient(114deg, #072b45fd 12%, #012b4594 44%, #26a69ae5 100%);
 }
-
+/* For semi-opaque panels */
 .surf-overlay-gradient.dark {
-  opacity: 0.88;
-  background: linear-gradient(94deg, #011D367c 48%, #026b7988 89%);
+  opacity: 0.9;
+  background: linear-gradient(94deg, #011d36cb 40%, #026b7988 99%);
+}
+.surf-overlay-gradient.light {
+  opacity: 0.4;
+  background: linear-gradient(132deg, #4fc3f7cc 19%, #e1f7faf1 100%);
 }
 
 /* For overlaying text on busy or image backgrounds */
