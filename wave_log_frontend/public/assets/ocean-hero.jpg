@@ -1,1 +1,1 @@
-<binary file placeholder: This should be replaced with an actual ocean hero image suitable for the hero/header background. This is a placeholder to ensure the file exists and can be referred to in process.env.PUBLIC_URL-based URLs, guaranteeing background image loading regardless of CSS. Rename/replace with a thematically appropriate ocean image in production.>
+FAKE-IMAGE: This is a placeholder "ocean-hero.jpg"—replace with a real ocean/surfing hero image for production.
