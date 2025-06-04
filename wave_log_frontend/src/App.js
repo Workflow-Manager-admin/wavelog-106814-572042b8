@@ -127,36 +127,107 @@ function Navbar({ onGoHome, onShowStats }) {
   );
 }
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * SessionCard
+ * Adds a dark overlay gradient below content for contrast when layered over any image/bg,
+ * ensures high color contrast and text shadow for readability.
+ */
 function SessionCard({ session, onClick }) {
-  // Card preview for session listing
   return (
-    <div className="session-card" style={{
-      background: 'rgba(255,248,225,0.89)',
-      borderLeft: `6px solid #26A69A`,
-      marginBottom: 16,
-      borderRadius: 12,
-      boxShadow: '0 2px 10px #026b7986',
-      cursor: 'pointer',
-      display: 'flex',
-      flexDirection: 'column',
-      transition: 'transform .07s',
-    }} tabIndex={0} onClick={onClick}
-      onKeyPress={e => {if (e.key==='Enter') onClick();}}
+    <div
+      className="session-card"
+      style={{
+        position: 'relative',
+        marginBottom: 16,
+        borderRadius: 15,
+        cursor: 'pointer',
+        overflow: 'hidden',
+        background: 'none',
+        minHeight: 98,
+        boxShadow: '0 2.5px 13px #002E4E23, 0 2.5px 18px #26a69a19',
+        borderLeft: `7px solid #26A69A`,
+        transition: 'transform .07s',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+      tabIndex={0}
+      onClick={onClick}
+      onKeyPress={e => { if (e.key === 'Enter') onClick(); }}
     >
-      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding:16}}>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
-          <div style={{ fontWeight: 700, color: '#1A1A1A' }}>{session.spot}</div>
-          <div style={{ fontSize: 13, color: '#4FC3F7' }}>{session.date}</div>
+      {/* Semi-transparent overlay for readability */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(92deg, #013857e7 10%, #039be5cc 82%, #23bac777 100%)',
+          opacity: 0.82,
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}
+        aria-hidden="true"
+      />
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: 18
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div
+              style={{
+                fontWeight: 700,
+                color: '#fff',
+                textShadow:
+                  '0 2px 9px #01455c7c, 0 1px 2px #fff, 0 0.5px 2px #17c3d198, 0 1.5px 9px #012957',
+                fontSize: 18,
+                letterSpacing: '.04em'
+              }}
+            >
+              {session.spot}
+            </div>
+            <div
+              style={{
+                fontSize: 14,
+                color: '#bbf3fa',
+                textShadow: '0 1.2px 7px #013e5b7d'
+              }}
+            >
+              {session.date}
+            </div>
+          </div>
+          <div
+            style={{
+              fontSize: 32,
+              marginRight: 10,
+              userSelect: 'none',
+              filter: 'drop-shadow(0 4px 7px #01767edc)'
+            }}
+          >
+            {getMoodIcon(session.mood)}
+          </div>
         </div>
-        <div style={{ fontSize: 32, marginRight: 10, userSelect:'none' }}>{getMoodIcon(session.mood)}</div>
-      </div>
-      <div style={{borderTop: '1px solid #4FC3F722', padding: '10px 16px', display: 'flex', justifyContent: 'space-between'}}>
-        <div>
-          <span role="img" aria-label="board">🛹</span> {session.board}
-        </div>
-        <div>
-          <span role="img" aria-label="waves">🌊</span> {session.waveCount} waves
+        <div
+          style={{
+            borderTop: '1px solid #37d5fa23',
+            padding: '10px 18px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            color: '#fffde9',
+            textShadow: '0 1px 6px #026b798a, 0 0.5px 1px #01c7e640',
+            fontWeight: 500,
+            fontSize: 15
+          }}
+        >
+          <div>
+            <span role="img" aria-label="board">🛹</span> {session.board}
+          </div>
+          <div>
+            <span role="img" aria-label="waves">🌊</span> {session.waveCount} waves
+          </div>
         </div>
       </div>
     </div>
