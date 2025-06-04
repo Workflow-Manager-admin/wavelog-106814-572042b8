@@ -363,3 +363,76 @@ select:focus {
   z-index: 1;
   pointer-events: none;
 }
+
+/* --- Readability overlays --- */
+.surf-overlay-gradient,
+.surf-foreground-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, #013857f0 10%, #039be5c3 73%, #26a69a88 100%);
+  z-index: 1;
+  opacity: 0.82;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Used for hero, card overlays, stats panels */
+.surf-overlay-gradient.strong {
+  opacity: 0.92;
+  background: linear-gradient(114deg, #012b45fa 19%, #26a69ae5 100%);
+}
+
+.surf-overlay-gradient.dark {
+  opacity: 0.88;
+  background: linear-gradient(94deg, #011D367c 48%, #026b7988 89%);
+}
+
+/* For overlaying text on busy or image backgrounds */
+.surf-text-strong {
+  color: #fff !important;
+  text-shadow: 0 2px 13px #01759e, 0 1.5px 2.5px #fff, 0 1px 8px #01446a91;
+  font-weight: 900 !important;
+  letter-spacing: .02em;
+}
+
+.surf-btn-outline {
+  color: #fff !important;
+  background: linear-gradient(90deg, #26A69A 72%, #4FC3F7 100%) !important;
+  border: 2px solid #fffccf !important;
+  text-shadow: 0 1px 5px #013e5a;
+  font-weight: 800;
+  font-size: 1.11rem;
+}
+
+.surf-stats-panel {
+  background: linear-gradient(120deg, #003957c8 15%, #024b5a99 72%, #fff8e1c2 100%);
+  color: #fff !important;
+  box-shadow: 0 2px 24px #01738e18;
+  border-radius: 17px;
+  padding: 21px 27px;
+}
+
+/* Force drop shadow for icon/text on image */
+.surf-icon-contrast {
+  text-shadow: 0 2.5px 13px #01667efa, 0 1.5px 7.5px #fff;
+  filter: drop-shadow(0 2.5px 11px #21bfe7d0);
+}
+
+/* Buttons: increased shadow and outline for critical contrast */
+.btn,
+.btn-large,
+.btn-navbar,
+.btn-reminder-later {
+  text-shadow: 0 1px 5px #01476e56;
+  outline: none;
+}
+
+.btn:focus, .btn-large:focus,
+.btn-navbar:focus, .btn-reminder-later:focus {
+  outline: 2.5px solid #4FC3F7;
+}
+
+.btn-reminder-later {
+  text-shadow: 0 2.5px 8px #016e92a1, 0 0px 1px #26a69a;
+}
+
