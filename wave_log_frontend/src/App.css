@@ -86,17 +86,42 @@ body {
 /* Oceanic session card */
 .session-card {
   transition: box-shadow 0.12s, transform 0.09s;
+  /* Engaging card background & shadow for theme */
+  background: rgba(255,248,225,0.92);
+  border-left: 7px solid #26a69a;
+  box-shadow: 0 4px 18px #01738e21, 0 1.5px 9px #26a69a13;
+  border-radius: 14px;
+  margin-bottom: 18px;
+  will-change: transform, box-shadow;
 }
 .session-card:focus,
 .session-card:hover {
-  outline: 2px solid #26a69a55;
-  box-shadow: 0 4px 18px #26a69acc;
-  transform: scale(1.012);
+  outline: 2px solid #26a69a9b;
+  box-shadow: 0 7px 25px #26a69ad1, 0 1.5px 7px #26a69a51;
+  transform: scale(1.018);
+  z-index: 4;
+}
+
+/* Oceanic themed mood icon bubble on card top-right */
+.session-card .mood-icon {
+  background: linear-gradient(140deg,#4FC3F7 60%,#26A69A 100%);
+  color: #fff;
+  border-radius: 50%;
+  padding: 6px 12px;
+  font-size: 29px;
+  box-shadow: 0 1px 7px #01738e33;
+  margin-right: 6px;
+  margin-left: 10px;
 }
 
 /* Session detail card */
 .session-detail-card {
   animation: fadein 0.5s;
+  transition: box-shadow 0.15s;
+  box-shadow: 0 7px 42px #01738e33, 0 1.5px 9px #26a69a25;
+  border-radius: 19px;
+  background: linear-gradient(125deg, #fff8e1de 90%, #e1f7fae8 100%);
+  overflow: hidden;
 }
 @keyframes fadein {
   from { opacity:0; transform: translateY(24px);}
