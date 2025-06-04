@@ -666,10 +666,10 @@ export default function App() {
           position: 'relative',
           minHeight: 320,
           backgroundImage: sectionImgExists
-            ? `url('${sectionBgUrl}')`
+            ? `linear-gradient(120deg, #003957cc 8%, #026b798e 74%, #1ca8bb2b 100%), url('${sectionBgUrl}')`
             : 'linear-gradient(170deg, #4FC3F7 0%, #26A69A 68%, #FFF8E1 100%)',
-          backgroundSize: sectionImgExists ? 'cover' : 'auto',
-          backgroundPosition: sectionImgExists ? 'center top' : 'center',
+          backgroundSize: sectionImgExists ? 'cover, cover' : 'cover',
+          backgroundPosition: sectionImgExists ? 'center top, center' : 'center',
           backgroundRepeat: 'no-repeat',
           borderRadius: 19,
           boxShadow: '0 2px 32px #02768a25',
@@ -677,14 +677,14 @@ export default function App() {
         }}
         aria-label={sectionImgExists ? 'waves background section' : undefined}
       >
-        {/* Overlay to ensure text remains readable */}
+        {/* Overlay for extreme fallback, covered by gradient if no image */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
             background: sectionImgExists
-              ? 'linear-gradient(120deg, #003957cc 10%, #026b798e 80%, #1ca8bb2b 100%)'
-              : 'none',
+              ? 'transparent'
+              : 'linear-gradient(120deg, #003957cc 10%, #026b798e 80%, #1ca8bb2b 100%)',
             zIndex: 0,
             borderRadius: 19,
           }}
