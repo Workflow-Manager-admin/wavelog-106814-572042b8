@@ -29,6 +29,39 @@ body {
   min-height: 100vh;
 }
 
+/* Ocean Hero Background (for Navbar/Header/above fold) */
+.surf-hero-bg {
+  position: relative;
+  min-height: 280px;
+  width: 100vw;
+  background-image: var(--ocean-hero-bg), var(--ocean-overlay);
+  background-size: cover, cover;
+  background-blend-mode: overlay;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.surf-hero-content {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  text-shadow: 0 4px 26px #027f89bb, 0 1px 2px #01657173;
+  padding: 2.5rem 1.5rem 1rem 1.5rem;
+  text-align: center;
+  max-width: 760px;
+}
+.surf-hero-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--ocean-overlay);
+  opacity: 0.8;
+  z-index: 1;
+}
+
 /* CONTINUED OCEANIC COMPONENT STYLES FOR SurfSync */
 
 /* Navbar modifications */
