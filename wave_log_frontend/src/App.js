@@ -613,11 +613,21 @@ export default function App() {
     setView('list');
   }
   // For ocean theme background and subtle wave image
-  const oceanBG = {
-    minHeight:'100vh',
-    background: 'linear-gradient(170deg, #4FC3F7 0%, #26A69A 68%, #FFF8E1 100%)',
-    backgroundAttachment:'fixed'
+  // Moved complex backgrounds to inline style in the hero/above main content.
+  const heroImageUrl = process.env.PUBLIC_URL + '/assets/ocean-hero.jpg';
+  const oceanHeroBG = {
+    minHeight: '235px',
+    width: '100%',
+    backgroundImage: `linear-gradient(120deg, #0074ba 12%, #026b798e 65%, #26a69ad3 100%), url('${heroImageUrl}')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative'
   };
+
   // Compose the main screen based on view
   let mainContent = null;
   if (view === 'list') {
@@ -663,10 +673,22 @@ export default function App() {
   }
 
   return (
-    <div className="app" style={oceanBG}>
+    <div className="app">
+      <div className="surf-hero-bg" style={oceanHeroBG}>
+        <div className="surf-hero-content">
+          <span className="surf-icon-circle">🌊</span>
+          <span className="surf-title-glow" style={{fontSize:'2.1rem', fontWeight:800, letterSpacing:'.02em'}}>
+            Welcome to SurfSync
+          </span>
+          <div style={{fontSize:'1.16rem', color:'#fffde9', marginTop:9, textShadow: '0 2px 8px #025c7799'}}>
+            Your private surf session log and ocean-inspired dashboard
+          </div>
+        </div>
+        <div className="surf-hero-overlay" />
+      </div>
       <Navbar onGoHome={goHome} onShowStats={openStats} />
       <main>
-        <div className="container" style={{paddingTop:80}}>
+        <div className="container" style={{paddingTop:40}}>
           {mainContent}
         </div>
       </main>
