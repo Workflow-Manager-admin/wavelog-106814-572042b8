@@ -593,108 +593,188 @@ function SessionList({ sessions, onSelect, filters, setFilters, onAdd }) {
   );
 }
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * StatsDashboard
+ * Adds extra overlays to dashboard panels for clarity if ever placed on strong backgrounds/images,
+ * and boosts contrast of text/headings and data.
+ */
 function StatsDashboard({ sessions, onBack }) {
-  // Visualizes: most visited spot, board usage %, mood trend
-  // Chart rendering is simple manual with CSS (no dependency)
   const spotCounts = {};
   const boardCounts = {};
   const moodCounts = {};
   const moodTrend = [];
   sessions.forEach(s => {
-    spotCounts[s.spot]=(spotCounts[s.spot]||0)+1;
-    boardCounts[s.board]=(boardCounts[s.board]||0)+1;
-    moodCounts[s.mood]=(moodCounts[s.mood]||0)+1;
-    moodTrend.push({date:s.date, mood:s.mood});
+    spotCounts[s.spot] = (spotCounts[s.spot] || 0) + 1;
+    boardCounts[s.board] = (boardCounts[s.board] || 0) + 1;
+    moodCounts[s.mood] = (moodCounts[s.mood] || 0) + 1;
+    moodTrend.push({ date: s.date, mood: s.mood });
   });
-  const spotsRanked = Object.entries(spotCounts).sort((a,b)=>b[1]-a[1]);
-  const boardsRanked = Object.entries(boardCounts).sort((a,b)=>b[1]-a[1]);
-  const moodsRanked = Object.entries(moodCounts).sort((a,b)=>b[1]-a[1]);
+  const spotsRanked = Object.entries(spotCounts).sort((a, b) => b[1] - a[1]);
+  const boardsRanked = Object.entries(boardCounts).sort((a, b) => b[1] - a[1]);
+  const moodsRanked = Object.entries(moodCounts).sort((a, b) => b[1] - a[1]);
   const totalSessions = sessions.length;
 
   function boardColor(board) {
     const idx = BOARDS.indexOf(board);
-    return ['#4FC3F7','#26A69A','#039be5','#B2EBF2','#00838f'][idx%5];
+    return ['#4FC3F7', '#26A69A', '#039be5', '#B2EBF2', '#00838f'][idx % 5];
   }
 
   return (
     <div style={{
-      maxWidth: 680, margin:'80px auto 0 auto', background:'#FFF8E1f2', borderRadius:18,
-      boxShadow:'0 4px 32px #01738e1a', padding:'32px 30px 28px 30px'
+      maxWidth: 690,
+      margin: '80px auto 0 auto',
+      borderRadius: 20,
+      position: 'relative',
+      boxShadow: '0 6px 34px #01738e1f, 0 6px 33px #01517e17, 0 1.5px 9px #26a69a25',
+      overflow: 'hidden',
+      background: 'none'
     }}>
-      <button className="btn" style={{marginBottom:12, background:'#26A69A', color:'#fff'}} onClick={onBack}>← Back</button>
-      <h2 style={{
-        color:'#4FC3F7', fontWeight:800, fontSize:32, marginBottom:8, textAlign:'center'
-      }}>Your Surf Stats</h2>
-      <div style={{display:'flex', flexWrap:'wrap', gap:26, marginTop:28}}>
-        {/* Most Visited Spot */}
-        <div style={{
-          background:'#26A69A12', borderRadius:9, padding:'12px 22px', flex:1, minWidth:180
-        }}>
-          <h4 style={{margin:'0 0 8px 0',color:'#01738E'}}>Most Visited Spot</h4>
-          {spotsRanked.length
-           ? <>
-               <div style={{fontWeight:700, fontSize:21, marginTop:3}}>
-                 {spotsRanked[0][0]}
-               </div>
-               <span style={{color:'#26A69A'}}>({spotsRanked[0][1]} sessions)</span>
-             </>
-           : <span style={{color:'#bdbdbd'}}>No sessions</span>}
-        </div>
-        {/* Board Usage */}
-        <div style={{
-          background:'#4FC3F714', borderRadius:9, padding:'12px 21px', flex:1, minWidth:195
-        }}>
-          <h4 style={{margin:'0 0 8px 0',color:'#01738E'}}>Board Usage (%)</h4>
-          {boardsRanked.map(([board, count])=>(
-            <div key={board} style={{fontSize:15, margin:'5px 0', display:'flex', alignItems:'center'}}>
-              <span role="img" aria-label="board" style={{marginRight:5}}>🛹</span>
-              {board}: 
-              <div style={{
-                background: boardColor(board),
-                width: ((count/totalSessions)*60+11)+'px', height:'10px', borderRadius:5, margin:'0 8px'
-              }}/>
-              <span style={{fontWeight:600}}> {Math.round((count/totalSessions)*100)}%</span>
-            </div>
-          ))}
-        </div>
-        {/* Mood Trend */}
-        <div style={{
-          background:'#4FC3F734', borderRadius:9, padding:'14px 17px', flex:1, minWidth:180
-        }}>
-          <h4 style={{
-            margin:'0 0 8px 0',color:'#01738E'
-          }}>Mood Trend</h4>
-          <div className="mood-trend-bar" style={{display:'flex',gap:4, alignItems:'flex-end', height: 48}}>
-            {moodTrend
-              .sort((a,b)=>a.date.localeCompare(b.date))
-              .map((m, idx)=> (
-              <div key={idx} title={m.date + ": " + m.mood}
-                aria-label={m.mood}
-                style={{
-                  width:10, height:28,
-                  background:'#4FC3F7',
-                  borderRadius:5,
-                  marginBottom: [0,2,5,10].includes(idx%4)?8:2,
-                  display: 'flex', alignItems:'center', justifyContent:'center',
-                }}>
-                <span role="img" aria-label="mood" style={{fontSize:18, verticalAlign:'middle'}}>
-                  {getMoodIcon(m.mood)}
+      {/* Extra overlay for stat cards */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(118deg,#012b4577 10%, #028ca777 94%, #f8e1 100%)',
+          opacity: 0.85,
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}
+        aria-hidden="true"
+      />
+      <div style={{ position: 'relative', zIndex: 2, padding: '32px 30px 28px 30px' }}>
+        <button className="btn"
+          style={{
+            marginBottom: 14,
+            background: 'linear-gradient(90deg, #26A69A 74%, #4FC3F7 100%)',
+            color: '#fff',
+            fontWeight: 700,
+            border: 'none',
+            textShadow: '0 1px 5px #044c6b'
+          }}
+          onClick={onBack}>← Back
+        </button>
+        <h2 style={{
+          color: '#fff',
+          fontWeight: 900,
+          fontSize: 34,
+          marginBottom: 8,
+          textAlign: 'center',
+          letterSpacing: '.02em',
+          textShadow: '0 3.5px 21px #017f899d, 0 1.5px 1.5px #fff'
+        }}>Your Surf Stats</h2>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 26, marginTop: 28 }}>
+          {/* Most Visited Spot */}
+          <div style={{
+            background: 'rgba(38,166,154,0.22)',
+            borderRadius: 12,
+            padding: '13px 25px',
+            flex: 1,
+            minWidth: 185,
+            color: '#fff',
+            boxShadow: '0 1px 7px #01738e13',
+            textShadow: '0 1.5px 7px #0996cf6a'
+          }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#a6f4fb', textShadow: '0 1px 7px #18f7fd6e' }}>
+              Most Visited Spot
+            </h4>
+            {spotsRanked.length
+              ? <>
+                <div style={{ fontWeight: 900, fontSize: 23, marginTop: 3, color: '#fff' }}>
+                  {spotsRanked[0][0]}
+                </div>
+                <span style={{ color: '#7efefe', fontWeight: 600 }}>
+                  ({spotsRanked[0][1]} sessions)
+                </span>
+              </>
+              : <span style={{ color: '#fff9' }}>No sessions</span>}
+          </div>
+          {/* Board Usage */}
+          <div style={{
+            background: 'rgba(79,195,247,0.25)',
+            borderRadius: 12,
+            padding: '13px 25px',
+            flex: 1,
+            minWidth: 200,
+            color: '#fff',
+            boxShadow: '0 1.5px 8px #4fc3f720',
+            textShadow: '0 1.5px 7px #0996cf6e'
+          }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#cffcff', textShadow: '0 1px 7px #4fc6cf7e' }}>
+              Board Usage (%)
+            </h4>
+            {boardsRanked.map(([board, count]) => (
+              <div key={board} style={{ fontSize: 15, margin: '5px 0', display: 'flex', alignItems: 'center' }}>
+                <span role="img" aria-label="board" style={{ marginRight: 5 }}>🛹</span>
+                {board}:
+                <div style={{
+                  background: boardColor(board),
+                  width: `${(count / totalSessions) * 60 + 11}px`,
+                  height: '10px',
+                  borderRadius: 5,
+                  margin: '0 8px'
+                }} />
+                <span style={{ fontWeight: 700, color: '#fff', textShadow: '0 1.5px 6px #0177eb6d' }}>
+                  {' '}{Math.round((count / totalSessions) * 100)}%
                 </span>
               </div>
             ))}
           </div>
-          <div style={{fontSize:13, color:'#4FC3F7', marginTop:4, textAlign:'right'}}>Oldest &rarr; Newest</div>
+          {/* Mood Trend */}
+          <div style={{
+            background: 'rgba(79,195,247,0.34)',
+            borderRadius: 12,
+            padding: '15px 16px',
+            flex: 1,
+            minWidth: 185,
+            color: '#fff',
+            boxShadow: '0 1.5px 8px #4fc3f722',
+            textShadow: '0 1.5px 6px #0996cf6d'
+          }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#fff', textShadow: '0 1px 7px #26e4f4c4' }}>
+              Mood Trend
+            </h4>
+            <div className="mood-trend-bar" style={{ display: 'flex', gap: 4, alignItems: 'flex-end', height: 48 }}>
+              {moodTrend
+                .sort((a, b) => a.date.localeCompare(b.date))
+                .map((m, idx) => (
+                  <div key={idx} title={m.date + ": " + m.mood}
+                    aria-label={m.mood}
+                    style={{
+                      width: 10, height: 28,
+                      background: '#4FC3F7',
+                      borderRadius: 5,
+                      marginBottom: [0, 2, 5, 10].includes(idx % 4) ? 9 : 2,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      filter: 'drop-shadow(0 1px 7px #017c7e48)'
+                    }}>
+                    <span role="img" aria-label="mood" style={{ fontSize: 18, verticalAlign: 'middle', filter: 'drop-shadow(0 2px 6px #25a3e766)' }}>
+                      {getMoodIcon(m.mood)}
+                    </span>
+                  </div>
+                ))}
+            </div>
+            <div style={{ fontSize: 13, color: '#adecf9', marginTop: 4, textAlign: 'right' }}>Oldest &rarr; Newest</div>
+          </div>
         </div>
-      </div>
-      <div style={{marginTop:32, background:'#4FC3F705', borderRadius:13, padding:17}}>
-        <h4 style={{marginBottom:5, color:'#01738E'}}>Mood Statistics:</h4>
-        {moodsRanked.length
-         ? moodsRanked.map(([mood,count]) =>
-            <span key={mood} style={{marginRight:15}}>
-              <b>{mood}</b> {getMoodIcon(mood)}: {count}
-            </span>)
-         : <span style={{color:'#bdbdbd'}}>No sessions logged.</span>}
+        <div style={{
+          marginTop: 35,
+          background: 'rgba(79,195,247,0.11)',
+          borderRadius: 15,
+          padding: 18,
+          color: '#fff',
+          fontWeight: 700,
+          textShadow: '0 1.5px 8px #14badf79'
+        }}>
+          <h4 style={{ marginBottom: 7, color: '#c4fff2', textShadow: '0 1px 9px #19eafac8' }}>Mood Statistics:</h4>
+          {moodsRanked.length
+            ? moodsRanked.map(([mood, count]) =>
+              <span key={mood} style={{ marginRight: 18 }}>
+                <b>{mood}</b> {getMoodIcon(mood)}: {count}
+              </span>
+            )
+            : <span style={{ color: '#fff9' }}>No sessions logged.</span>}
+        </div>
       </div>
     </div>
   );
