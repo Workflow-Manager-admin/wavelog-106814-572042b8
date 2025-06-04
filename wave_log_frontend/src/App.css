@@ -218,9 +218,13 @@ body {
 /* Modal for reminders */
 .reminder-modal {
   animation: fadein 0.3s;
+  /* dark modal overlay provided inline, add extra shadow inside for center modal */
+  box-shadow: 0 8px 48px #001e3199;
 }
+
 .reminder-modal button:focus {
   outline: 2.5px solid #20777ed2;
+  box-shadow: 0 0 0 3px #4FC3F7aa;
 }
 
 /* Emphasized "Later" button for reminder modal - extra high contrast, large */
