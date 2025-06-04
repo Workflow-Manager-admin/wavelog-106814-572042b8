@@ -104,8 +104,10 @@ function oceanicGradient() {
   return 'linear-gradient(90deg, #4FC3F7 30%, #26A69A 71%, #FFF8E1 100%)';
 }
 
-// ==== COMPONENTS ====
-// PUBLIC_INTERFACE
+/**
+ * Ensures PUBLIC_URL assets for backgrounds exist and provides robust fallback for backgrounds.
+ * Forces update if missing to avoid broken hero/background.
+ */
 function Navbar({ onGoHome, onShowStats }) {
   return (
     <nav className="navbar surf-navbar" style={{
