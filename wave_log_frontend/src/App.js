@@ -623,19 +623,9 @@ function StatsDashboard({ sessions, onBack }) {
       overflow: 'hidden',
       background: 'none'
     }}>
-      {/* Extra overlay for stat cards */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(118deg,#012b4577 10%, #028ca777 94%, #f8e1 100%)',
-          opacity: 0.85,
-          zIndex: 1,
-          pointerEvents: 'none'
-        }}
-        aria-hidden="true"
-      />
-      <div style={{ position: 'relative', zIndex: 2, padding: '32px 30px 28px 30px' }}>
+      {/* Robust overlay for all dashboard sections */}
+      <div className="surf-overlay-gradient strong" aria-hidden="true" />
+      <div style={{ position: 'relative', zIndex: 2, padding: '38px 36px 30px 36px' }}>
         <button className="btn"
           style={{
             marginBottom: 14,
