@@ -234,51 +234,154 @@ function SessionCard({ session, onClick }) {
   );
 }
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * SessionDetail
+ * Adds a blurred gradient overlay and improved color/shadow contrast for legibility over any backgrounds.
+ */
 function SessionDetail({ session, onBack, onEdit, onDelete }) {
-  // Shows all details of a surf session, allows edit/delete.
   if (!session) return null;
   return (
-    <div className="session-detail-card" style={{
-      background: '#FFF8E1',
-      borderRadius: 16,
-      padding: 32,
-      boxShadow: '0 4px 32px #01738e28',
-      margin: '50px auto 26px auto',
-      maxWidth: 550
-    }}>
-      <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-        <button className="btn" style={{ background: '#4FC3F7', color: '#FFF', fontWeight:600 }} onClick={onBack}>← Back</button>
-        <div style={{fontSize:26, fontWeight:700, color:'#1A1A1A', marginLeft:8}}>&nbsp;Session Details</div>
-      </div>
-      <hr style={{margin: '18px 0 14px 0', borderTop:'2px solid #4FC3F7cc'}} />
-      <div style={{display:'flex', alignItems:'center', marginBottom: 10}}>
-        <span style={{fontSize:35, marginRight:16}}>{getMoodIcon(session.mood)}</span>
-        <div>
-          <div style={{fontWeight:600, fontSize:19}}>{session.spot} <span style={{color:'#26A69A', fontSize:16}}>&bull; {session.date}</span>
+    <div
+      className="session-detail-card"
+      style={{
+        position: 'relative',
+        background: 'none',
+        borderRadius: 18,
+        margin: '50px auto 26px auto',
+        boxShadow: '0 4px 36px #00778c28, 0 2.5px 7px #26a69a25',
+        maxWidth: 570,
+        overflow: 'hidden'
+      }}
+    >
+      {/* Overlay for high contrast */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(120deg, #043c5fda 17%, #24b0aaf5 90%, #fff3 100%)',
+          filter: 'blur(0.5px)',
+          zIndex: 1,
+          opacity: 0.84,
+          pointerEvents: 'none'
+        }}
+        aria-hidden="true"
+      />
+      <div style={{ position: 'relative', zIndex: 2, padding: 32 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <button
+            className="btn"
+            style={{
+              background: 'linear-gradient(90deg, #26A69A 60%, #4FC3F7 110%)',
+              color: '#fff', fontWeight: 700, textShadow: '0 1px 5px #01486b',
+              border: 'none'
+            }}
+            onClick={onBack}
+          >← Back</button>
+          <div style={{
+            fontSize: 29,
+            fontWeight: 800,
+            color: '#fff',
+            marginLeft: 8,
+            textShadow: '0 2.5px 11px #017f8990, 0 1px 1px #013857, 0 .5px 0 #fff'
+          }}>
+            &nbsp;Session Details
           </div>
-          <div style={{fontSize:15, color:'#4FC3F7'}}>{session.board}</div>
         </div>
-      </div>
-      <div style={{margin:'16px 0'}}>
-        <b>Waves ridden:</b> <span>{session.waveCount}</span>
-      </div>
-      <div style={{margin:'6px 0'}}>
-        <b>Conditions:</b> <span>{session.swellSize}ft swell, {session.wind}, {session.tide} tide</span>
-      </div>
-      <div style={{margin:'8px 0', fontWeight:500}}>
-        <span style={{background:'#4FC3F7',color:'white',borderRadius:8, padding:'2px 12px', marginRight:8, fontSize:16}}>
-          Mood: {session.mood} {getMoodIcon(session.mood)}</span>
-      </div>
-      <div style={{margin: '18px 0', background:'#26A69A16', padding:12, borderRadius:8}}>
-        <b>Notes:</b>
-        <div style={{marginTop:4, color:'#01738e'}}>{session.notes}</div>
-      </div>
-      <div style={{marginTop:18, display:'flex', gap:12}}>
-        <button className="btn" style={{background:'#26A69A', color:'#fff'}} onClick={onEdit}>Edit</button>
-        <button className="btn" style={{background:'#fff', color:'#e53935', border:'1.1px solid #e53936bb'}} onClick={() => {
-          if(window.confirm('Delete this session?')) onDelete();
-        }}>Delete</button>
+        <hr style={{ margin: '18px 0 14px 0', borderTop: '2.5px solid #4FC3F7bb' }} />
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 11 }}>
+          <span style={{
+            fontSize: 41, marginRight: 18,
+            filter: 'drop-shadow(0 2.2px 8px #21d6f8bd)'
+          }}>{getMoodIcon(session.mood)}</span>
+          <div>
+            <div style={{
+              fontWeight: 700,
+              fontSize: 21,
+              color: '#fff',
+              textShadow: '0 2px 7px #01616a7a, 0 1px 2px #fff'
+            }}>
+              {session.spot}
+              <span style={{
+                color: '#a8feff',
+                fontSize: 16,
+                marginLeft: 6,
+                textShadow: '0 1px 7px #29adc894'
+              }}>
+                &bull; {session.date}
+              </span>
+            </div>
+            <div style={{
+              fontSize: 15,
+              color: '#6ef7eb',
+              textShadow: '0 1.2px 7px #0996cf6e'
+            }}>{session.board}</div>
+          </div>
+        </div>
+        <div style={{
+          margin: '16px 0',
+          color: '#fff',
+          fontWeight: 600,
+          textShadow: '0 1.5px 8px #09b7f89c, 0 1px 1px #fff'
+        }}>
+          <b>Waves ridden:</b> <span>{session.waveCount}</span>
+        </div>
+        <div style={{
+          margin: '6px 0',
+          color: '#fff',
+          fontWeight: 600,
+          textShadow: '0 1.5px 8px #09b7f89c, 0 1px 1px #fff'
+        }}>
+          <b>Conditions:</b> <span>{session.swellSize}ft swell, {session.wind}, {session.tide} tide</span>
+        </div>
+        <div style={{
+          margin: '8px 0',
+          fontWeight: 700,
+          color: '#0af7c7',
+          background: 'linear-gradient(92deg, #026bceea 30%, #24b0caaa 90%)',
+          borderRadius: 10,
+          padding: '4.7px 17px',
+          display: 'inline-block',
+          fontSize: 17,
+          boxShadow: '0 1.5px 8px #00afc5'
+        }}>
+          Mood: {session.mood} {getMoodIcon(session.mood)}
+        </div>
+        <div style={{
+          margin: '19px 0',
+          background: 'linear-gradient(102deg, #fffde199 60%, #e1f7faf1 100%)',
+          padding: 15,
+          borderRadius: 12,
+          color: '#013957',
+          textShadow: '0 1.2px 7px #26e4f45d'
+        }}>
+          <b>Notes:</b>
+          <div style={{ marginTop: 5, color: '#01547a' }}>{session.notes}</div>
+        </div>
+        <div style={{ marginTop: 21, display: 'flex', gap: 15 }}>
+          <button className="btn"
+            style={{
+              background: 'linear-gradient(90deg, #26A69A 50%, #4FC3F7 100%)',
+              color: '#fff',
+              border: 'none',
+              fontWeight: 700,
+              boxShadow: '0 2px 11px #01597c5a'
+            }}
+            onClick={onEdit}
+          >Edit</button>
+          <button className="btn"
+            style={{
+              background: '#fff',
+              color: '#e53935',
+              border: '1.6px solid #e53936bb',
+              fontWeight: 700,
+              boxShadow: '0 1.5px 7px #00000010'
+            }}
+            onClick={() => {
+              if (window.confirm('Delete this session?')) onDelete();
+            }}>Delete
+          </button>
+        </div>
       </div>
     </div>
   );
