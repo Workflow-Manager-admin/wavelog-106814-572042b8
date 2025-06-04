@@ -25,45 +25,145 @@ body {
   min-height: 100vh;
 }
 
-body {
-  margin: 0;
-  font-family: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  background-color: var(--base-dark);
-  color: var(--text-color);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* CONTINUED OCEANIC COMPONENT STYLES FOR SurfSync */
+
+/* Navbar modifications */
+.surf-navbar {
+  background: linear-gradient(90deg, #4fc3f7 30%, #26a69a 71%, #fff8e1 100%);
+  border-bottom: 2px solid #26a69a33;
+  color: #1a384a;
+  box-shadow: 0 2px 18px #25b1b935;
+}
+.surf-navbar .logo-symbol {
+  color: #4fc3f7;
+}
+.surf-navbar .btn-navbar {
+  background: #f2ffff;
+  color: #4fc3f7;
+  font-weight: 700;
+  padding: 7px 22px;
+  border-radius: 7px;
+  border: 1px solid #26a69a55;
 }
 
+/* Oceanic session card */
+.session-card {
+  transition: box-shadow 0.12s, transform 0.09s;
+}
+.session-card:focus,
+.session-card:hover {
+  outline: 2px solid #26a69a55;
+  box-shadow: 0 4px 18px #26a69acc;
+  transform: scale(1.012);
+}
+
+/* Session detail card */
+.session-detail-card {
+  animation: fadein 0.5s;
+}
+@keyframes fadein {
+  from { opacity:0; transform: translateY(24px);}
+  to   { opacity:1; transform: none;}
+}
+
+/* Log Session Form */
+.log-session-form {
+  animation: fadein 0.6s;
+}
+.form-row {
+  margin-bottom: 17px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.form-row label {
+  width: 110px;
+  font-weight: 500;
+  color: #4fc3f7;
+}
+.log-session-form input[type="date"],
+.log-session-form select,
+.log-session-form input[type="number"] {
+  font-size: 1rem;
+  padding: 5px 7px;
+  background: #e1f7fa;
+  color: #02586a;
+}
+.log-session-form textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  background: #e1f7fa;
+}
+.mood-inputs label {
+  margin-right: 0;
+}
+
+/* Buttons */
+.btn {
+  background-color: #4fc3f7;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 21px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  outline: none;
+  box-shadow: 0 1px 6px #01738e2c;
+}
+.btn:focus {
+  outline: 2px solid #20777ea5;
+}
+.btn-large {
+  padding: 12px 27px;
+  font-size: 1.09rem;
+}
+.btn:hover, .btn:active {
+  background-color: #26a69a;
+  color: #fff8e1;
+}
+
+/* Modal for reminders */
+.reminder-modal {
+  animation: fadein 0.3s;
+}
+.reminder-modal button:focus {
+  outline: 2px solid #26a69a;
+}
+
+/* Dashboard/Stats styles */
+.mood-trend-bar {
+  align-items: flex-end;
+}
+.mood-trend-bar > div {
+  box-shadow: 0 1px 5px #26a69a1c;
+}
+
+/* Filtering selects */
+select {
+  cursor: pointer;
+}
+select:focus {
+  outline: 2px solid #4fc3f7;
+  background: #e1f7fa;
+}
+::-webkit-input-placeholder {color:#96bac1;}
+::-moz-placeholder { color:#96bac1;}
+:-ms-input-placeholder {color:#96bac1;}
+::placeholder {color:#96bac1;}
+
+/* Accessibility: visible focus for card and main controls */
+[tabindex]:focus, input:focus, textarea:focus {
+  outline: 2px solid #26a69a99;
+}
+
+/* General app container */
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-.navbar {
-  background-color: var(--base-dark);
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border-color);
-  position: fixed;
-  top: 0;
-  width: 100%;
-  box-sizing: border-box;
-  z-index: 100;
-}
-
-.logo {
-  font-size: 1.25rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.logo-symbol {
-  color: var(--base-light);
+  background: none;
 }
 
 .container {
@@ -74,54 +174,18 @@ body {
   box-sizing: border-box;
 }
 
-.hero {
-  padding-top: 120px;
-  padding-bottom: 64px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
+/* Responsive - shrink for mobile */
+@media (max-width: 700px) {
+  .container {
+    padding: 0 7px;
+  }
+  .session-detail-card, .log-session-form, .stats-card {
+    padding: 12px 2vw;
+    min-width: unset;
+  }
 }
 
-.subtitle {
-  color: var(--base-light);
-  font-weight: 500;
-  font-size: 1.1rem;
-}
-
-.title {
-  font-size: 3.5rem;
-  font-weight: 600;
-  line-height: 1.2;
-  margin: 0;
-}
-
-.description {
-  font-size: 1.1rem;
-  line-height: 1.5;
-  color: var(--text-secondary);
-  max-width: 600px;
-  margin-bottom: 16px;
-}
-
-.btn {
-  background-color: var(--base-light);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.btn:hover {
-  background-color: #7691ff;
-}
-
-.btn-large {
-  padding: 12px 24px;
-  font-size: 1.1rem;
+/* Remove unwanted legacy styles (hide hero, template, etc) */
+.hero, .subtitle, .description, .title {
+  display: none !important;
 }
