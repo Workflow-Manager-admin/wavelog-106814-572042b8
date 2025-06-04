@@ -142,12 +142,14 @@ body {
 /* Log Session Form */
 .log-session-form {
   animation: fadein 0.6s;
-  background: linear-gradient(120deg,#FFF8E1f4 85%,#e1f7faf1 100%);
+  position: relative;
+  background: none; /* actual background managed inline, overlays provide contrast */
   border-radius: 17px;
   box-shadow: 0 5px 32px #0e7b8e24, 0 1.5px 5px #0e7b8e27;
   padding: 32px 30px 22px 30px;
   max-width: 445px;
   margin: 42px auto;
+  overflow: hidden;
 }
 .form-row {
   margin-bottom: 17px;
