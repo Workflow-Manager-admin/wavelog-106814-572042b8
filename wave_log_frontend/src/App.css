@@ -282,9 +282,10 @@ select:focus {
   background: none;
   /* Setup for ocean background with mobile/desktop tastefulness */
   background:
-    linear-gradient(170deg, #4FC3F7 0%, #26A69A 68%, #FFF8E1 100%),
-    url('/assets/ocean-bg-pattern.png');
-  background-size: cover, cover;
+    linear-gradient(170deg, #4FC3F7 0%, #26A69A 68%, #FFF8E1 100%);
+  /* Remove ocean-bg-pattern.png for now to avoid unrelated build errors.
+     To restore later: background: ..., url(process.env.PUBLIC_URL + '/assets/ocean-bg-pattern.png'); in inline style, not here. */
+  background-size: cover;
   background-position: center, top;
   background-repeat: no-repeat;
   background-attachment: fixed;
