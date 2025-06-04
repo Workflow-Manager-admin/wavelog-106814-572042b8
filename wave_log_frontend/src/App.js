@@ -617,43 +617,58 @@ export default function App() {
   // For ocean theme background and subtle wave image
   // Moved complex backgrounds to inline style in the hero/above main content.
 
-  // --- HERO/HEADER: Strong robust import or PUBLIC_URL for ocean-hero background ---
-  // Use process.env.PUBLIC_URL and robust error-safe fallback to always show background
+  // --- HERO/HEADER: Robust PUBLIC_URL asset for ocean-hero background ---
+  // Use process.env.PUBLIC_URL and guarantee fallback gradient if asset is missing.
   const heroImageUrl = process.env.PUBLIC_URL + '/assets/ocean-hero.jpg';
 
-  // Image existence check (guarantee: always fallback to gradient if missing)
+  // True asset existence checking for best experience (avoids broken images)
   const [oceanImgExists, setOceanImgExists] = useState(true);
   useEffect(() => {
-    // Always check asset is accessible before using as background (prevents React build path issues)
     const img = new window.Image();
     img.onload = () => setOceanImgExists(true);
     img.onerror = () => setOceanImgExists(false);
     img.src = heroImageUrl;
-    // eslint-disable-next-line
   }, [heroImageUrl]);
 
-  // Compose robust hero background style, using image asset if found
-  const oceanHeroBG = useMemo(() => ({
-    minHeight: '260px',
-    width: '100%',
-    backgroundImage:
-      oceanImgExists
-        ? `linear-gradient(120deg, #002640bb 9%, #016b7fa0 68%, #26A69Aa2 100%), url("${heroImageUrl}")`
-        : 'linear-gradient(120deg, #0074ba 12%, #026b798e 65%, #26a69ad3 100%)',
-    backgroundSize: oceanImgExists ? 'cover, cover' : 'cover',
-    backgroundBlendMode: oceanImgExists ? 'overlay' : undefined,
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
-    backgroundColor: '#01748C',
-    boxShadow: '0 4px 22px #02748933, 0 0.5px 2px #01657144'
-  }), [heroImageUrl, oceanImgExists]);
+  // Compose hero/hero background style – always try to use ocean image then overlay for text readability.
+  const oceanHeroBG = useMemo(() => {
+    if (oceanImgExists) {
+      return {
+        minHeight: '260px',
+        width: '100%',
+        backgroundImage:
+          `linear-gradient(120deg, #002640bb 9%, #016b7fa0 68%, #26A69Aa2 100%), url("${heroImageUrl}")`,
+        backgroundSize: 'cover, cover',
+        backgroundBlendMode: 'overlay',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        backgroundColor: '#01748C',
+        boxShadow: '0 4px 22px #02748933, 0 0.5px 2px #01657144'
+      };
+    } else {
+      return {
+        minHeight: '260px',
+        width: '100%',
+        backgroundImage: 'linear-gradient(120deg, #0074ba 18%, #016b7fcc 64%, #26A69Ad7 100%)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        backgroundColor: '#01748C',
+        boxShadow: '0 4px 22px #02748933, 0 0.5px 2px #01657144'
+      };
+    }
+  }, [heroImageUrl, oceanImgExists]);
 
 
-  // Session list/main section background: process.env.PUBLIC_URL for pattern asset, fallback to gradient
+  // Session/main section background – force use of PUBLIC_URL for background pattern asset, fallback to pure gradient if missing.
   const sectionBgUrl = process.env.PUBLIC_URL + '/assets/ocean-bg-pattern.png';
   const [sectionImgExists, setSectionImgExists] = useState(true);
   useEffect(() => {
@@ -661,7 +676,6 @@ export default function App() {
     img.onload = () => setSectionImgExists(true);
     img.onerror = () => setSectionImgExists(false);
     img.src = sectionBgUrl;
-    // eslint-disable-next-line
   }, [sectionBgUrl]);
 
   // Compose the main screen based on view
@@ -673,10 +687,9 @@ export default function App() {
         style={{
           position: 'relative',
           minHeight: 320,
-          // Always use process.env.PUBLIC_URL for background asset in React
           backgroundImage: sectionImgExists
-            ? `linear-gradient(120deg, #003957ca 5%, #026b79a4 74%, #22bac780 97%), url("${sectionBgUrl}")`
-            : 'linear-gradient(170deg, #4FC3F7 0%, #26A69A 68%, #FFF8E1 100%)',
+            ? `linear-gradient(120deg, #003957be 5%, #026b79b8 69%, #22bac799 97%), url("${sectionBgUrl}")`
+            : 'linear-gradient(170deg, #4FC3F7 0%, #26A69A 70%, #FFF8E1 100%)',
           backgroundSize: sectionImgExists ? 'cover, cover' : 'cover',
           backgroundPosition: sectionImgExists ? 'center top, center' : 'center',
           backgroundRepeat: 'no-repeat',
@@ -687,14 +700,14 @@ export default function App() {
         }}
         aria-label={sectionImgExists ? 'waves background section' : undefined}
       >
-        {/* Overlay for visually busy backgrounds, for readable text/buttons */}
+        {/* Strong enough dark overlay for all backgrounds for text visibility */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
             background: sectionImgExists
-              ? 'linear-gradient(120deg, #0177bb44 9%, #01445766 60%, #fff0 100%)'
-              : 'linear-gradient(120deg, #003957cc 10%, #026b798e 80%, #1ca8bb2b 100%)',
+              ? 'linear-gradient(120deg, #012b4588 10%, #0177bb77 59%, #fff0 100%)'
+              : 'linear-gradient(120deg, #003957be 10%, #026b7988 79%, #1ca8bb20 100%)',
             zIndex: 1,
             borderRadius: 19,
             pointerEvents: 'none'
