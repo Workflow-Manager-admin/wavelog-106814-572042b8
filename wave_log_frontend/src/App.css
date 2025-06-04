@@ -257,6 +257,10 @@ body {
   border-radius: 14px;
   box-shadow: 0 4px 32px #01738e18;
   padding: 23px 30px;
+  font-size: 1.12rem;
+  color: #17445e;
+  font-weight: 700;
+  text-shadow: 0 2px 10px #01738e22, 0 0.5px 2px #fff;
 }
 .mood-trend-bar {
   align-items: flex-end;
@@ -420,9 +424,9 @@ select:focus {
   color: #fff !important;
   background: linear-gradient(90deg, #26A69A 72%, #4FC3F7 100%) !important;
   border: 2px solid #fffccf !important;
-  text-shadow: 0 1px 5px #013e5a;
-  font-weight: 800;
-  font-size: 1.11rem;
+  text-shadow: 0 2.2px 9px #013e5aca, 0 1px 4px #fff;
+  font-weight: 900;
+  font-size: 1.19rem;
 }
 
 .surf-stats-panel {
