@@ -511,6 +511,15 @@ function StatsDashboard({ sessions, onBack }) {
   );
 }
 
+/*
+  WaveLog "Did you surf today?" Reminder Modal
+  - 'Later' button high-contrast styling for guaranteed visibility.
+  - When 'Later' is pressed, stores dismissal state in sessionStorage,  
+    so the reminder doesn't appear again within the same session.
+  - Modal logic/JSX is accessible and unobtrusive (not blocking background keyboard).
+  - Logic handled in `useReminder()` and reminderOpen state.
+*/
+
 // ==== MAIN APP ====
 // PUBLIC_INTERFACE
 export default function App() {
@@ -625,23 +634,87 @@ export default function App() {
       </main>
       {/* Reminder Modal */}
       {reminderOpen && (
-        <div className="reminder-modal" style={{
-          position:'fixed',top:0,left:0,right:0,bottom:0,zIndex:10000,
-          background:'rgba(16,24,32,0.26)',display:'flex',alignItems:'center',justifyContent:'center',
-        }}>
-          <div style={{
-            background:'#FFF8E1',borderRadius:16,padding:'32px 40px',maxWidth:340,minWidth:240,
-            boxShadow:'0 2px 24px #026b79aa', textAlign:'center', border:'2px solid #4FC3F799'
-          }}>
-            <span style={{fontSize:44,display:'block',marginBottom:14}}>🌊</span>
-            <div style={{fontWeight:700,fontSize:22,color:'#26A69A'}}>Did you surf today?</div>
-            <div style={{color:'#01738e',margin:'12px 0'}}>Don&apos;t forget to log your session!</div>
-            <div style={{display:'flex',gap:10,justifyContent:'center',marginTop:13}}>
-              <button className="btn" style={{background:'#26A69A', color:'#fff'}} onClick={()=>{
-                setReminderOpen(false); setView('log');
-              }}>Log Now</button>
-              <button className="btn" style={{background:'#fff',border:'1.1px solid #26A69A'}}
-                onClick={()=> setReminderOpen(false)}>Later</button>
+        <div
+          className="reminder-modal"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 10000,
+            background: 'rgba(16,24,32,0.26)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          tabIndex={-1}
+          aria-modal="true"
+          role="dialog"
+        >
+          <div
+            style={{
+              background: '#FFF8E1',
+              borderRadius: 16,
+              padding: '32px 40px',
+              maxWidth: 340,
+              minWidth: 240,
+              boxShadow: '0 2px 24px #026b79aa',
+              textAlign: 'center',
+              border: '2px solid #4FC3F799',
+              outline: 'none'
+            }}
+          >
+            <span style={{ fontSize: 44, display: 'block', marginBottom: 14 }}>
+              🌊
+            </span>
+            <div style={{ fontWeight: 700, fontSize: 22, color: '#26A69A' }}>
+              Did you surf today?
+            </div>
+            <div style={{ color: '#01738e', margin: '12px 0' }}>
+              Don&apos;t forget to log your session!
+            </div>
+            <div style={{ display: 'flex', gap: 13, justifyContent: 'center', marginTop: 13 }}>
+              <button
+                className="btn"
+                style={{
+                  background: '#26A69A',
+                  color: '#fff',
+                  fontWeight: 700,
+                  border: '1.5px solid #01896c',
+                  boxShadow: '0 1px 7px #26a69a26',
+                  minWidth: 92,
+                }}
+                onClick={() => {
+                  setReminderOpen(false);
+                  setView('log');
+                  sessionStorage.setItem('surfReminderDismissed', '1');
+                }}
+                autoFocus
+              >
+                Log Now
+              </button>
+              <button
+                className="btn"
+                style={{
+                  background: '#181F1A',
+                  color: '#FFFFFE',
+                  border: '2px solid #4FC3F7',
+                  fontWeight: 800,
+                  minWidth: 92,
+                  boxShadow: '0 1px 7px #1A5C7488',
+                  textShadow: '0 2px 8px #0006, 0 0px 1px #26a69a',
+                  letterSpacing: ".5px"
+                }}
+                onClick={() => {
+                  setReminderOpen(false);
+                  sessionStorage.setItem('surfReminderDismissed', '1');
+                }}
+                tabIndex={0}
+                aria-label="Later (dismiss reminder popup)"
+              >
+                Later
+              </button>
             </div>
           </div>
         </div>
