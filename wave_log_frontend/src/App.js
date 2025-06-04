@@ -69,6 +69,7 @@ const TIDES = ['Low', 'Mid', 'High'];
 function useReminder(sessions, onPrompt) {
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
+    // If we stored dismissal this session, don't prompt again
     const dismissed = sessionStorage.getItem('surfReminderDismissed');
     if (!sessions.some((s) => s.date === today) && !dismissed) {
       const reminder = setTimeout(() => {
