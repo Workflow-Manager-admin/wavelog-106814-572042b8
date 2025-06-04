@@ -1,1 +1,1 @@
-<PLACEHOLDER: Oceanic wave pattern PNG. Replace with appropriate pattern image asset.>
+<binary file placeholder: This should be replaced with a PNG "ocean wave pattern" image, visually subtle and tileable for backgrounds under session/main content. This placeholder ensures the background can be always rendered via process.env.PUBLIC_URL even in strict production builds. Replace with a real graphic in production.>
