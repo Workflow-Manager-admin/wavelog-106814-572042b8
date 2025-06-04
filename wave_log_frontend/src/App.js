@@ -657,34 +657,40 @@ export default function App() {
             style={{
               background: '#FFF8E1',
               borderRadius: 16,
-              padding: '32px 40px',
-              maxWidth: 340,
-              minWidth: 240,
+              padding: '34px 38px',
+              maxWidth: 365,
+              minWidth: 244,
               boxShadow: '0 2px 24px #026b79aa',
               textAlign: 'center',
               border: '2px solid #4FC3F799',
               outline: 'none'
             }}
           >
-            <span style={{ fontSize: 44, display: 'block', marginBottom: 14 }}>
+            <span style={{ fontSize: 47, display: 'block', marginBottom: 14 }}>
               🌊
             </span>
-            <div style={{ fontWeight: 700, fontSize: 22, color: '#26A69A' }}>
+            <div style={{ fontWeight: 800, fontSize: 24, color: '#26A69A', letterSpacing: 0.1, marginBottom: 6 }}>
               Did you surf today?
             </div>
-            <div style={{ color: '#01738e', margin: '12px 0' }}>
+            <div style={{ color: '#01738e', margin: '10px 0 8px 0', fontWeight: 500 }}>
               Don&apos;t forget to log your session!
             </div>
-            <div style={{ display: 'flex', gap: 13, justifyContent: 'center', marginTop: 13 }}>
+            <div style={{ display: 'flex', flexDirection:'column', gap: 10, justifyContent: 'center', marginTop: 18 }}>
               <button
-                className="btn"
+                className="btn btn-large"
                 style={{
                   background: '#26A69A',
                   color: '#fff',
-                  fontWeight: 700,
-                  border: '1.5px solid #01896c',
-                  boxShadow: '0 1px 7px #26a69a26',
-                  minWidth: 92,
+                  fontWeight: 800,
+                  border: '2px solid #01896c',
+                  boxShadow: '0 1px 7px #26a69a46',
+                  minWidth: 120,
+                  fontSize: '1.13rem',
+                  letterSpacing: '.1px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 7
                 }}
                 onClick={() => {
                   setReminderOpen(false);
@@ -692,30 +698,70 @@ export default function App() {
                   sessionStorage.setItem('surfReminderDismissed', '1');
                 }}
                 autoFocus
+                tabIndex={0}
+                aria-label="Log your session now"
+                onKeyPress={e => {
+                  if (e.key === 'Enter') {
+                    setReminderOpen(false);
+                    setView('log');
+                    sessionStorage.setItem('surfReminderDismissed', '1');
+                  }
+                }}
               >
+                <span role="img" aria-label="Log">📝</span>
                 Log Now
               </button>
               <button
-                className="btn"
+                className="btn btn-large"
                 style={{
-                  background: '#181F1A',
-                  color: '#FFFFFE',
-                  border: '2px solid #4FC3F7',
-                  fontWeight: 800,
-                  minWidth: 92,
-                  boxShadow: '0 1px 7px #1A5C7488',
-                  textShadow: '0 2px 8px #0006, 0 0px 1px #26a69a',
-                  letterSpacing: ".5px"
+                  background: 'linear-gradient(90deg, #4FC3F7 76%, #26A69A 100%)',
+                  color: '#fff',
+                  border: '3px solid #01738e',
+                  fontWeight: 900,
+                  minWidth: 120,
+                  fontSize: '1.17rem',
+                  boxShadow: '0 2px 9px #01738e36',
+                  textShadow: '0 2px 7px #0007, 0 0px 1px #26a69a',
+                  letterSpacing: ".6px",
+                  outline: 'none',
+                  transition: 'background .18s, color .18s, border .12s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 8
                 }}
                 onClick={() => {
                   setReminderOpen(false);
                   sessionStorage.setItem('surfReminderDismissed', '1');
                 }}
+                onKeyPress={e => {
+                  if (e.key === 'Enter') {
+                    setReminderOpen(false);
+                    sessionStorage.setItem('surfReminderDismissed', '1');
+                  }
+                }}
                 tabIndex={0}
                 aria-label="Later (dismiss reminder popup)"
+                onMouseOver={e => {
+                  e.currentTarget.style.background = '#1A384A';
+                  e.currentTarget.style.color = '#FFF8E1';
+                }}
+                onMouseOut={e => {
+                  e.currentTarget.style.background = 'linear-gradient(90deg, #4FC3F7 76%, #26A69A 100%)';
+                  e.currentTarget.style.color = '#fff';
+                }}
               >
+                <span role="img" aria-label="Clock">⏰</span>
                 Later
               </button>
+              <span style={{
+                marginTop: 6,
+                color: '#01738eaa',
+                fontSize: '0.96em',
+                fontWeight: 500
+              }}>
+                (You can always log a session later from the home screen.)
+              </span>
             </div>
           </div>
         </div>

@@ -129,8 +129,36 @@ body {
   animation: fadein 0.3s;
 }
 .reminder-modal button:focus {
-  outline: 2px solid #26a69a;
+  outline: 2.5px solid #20777ed2;
 }
+
+/* Emphasized "Later" button for reminder modal - extra high contrast, large */
+.btn-reminder-later {
+  background: linear-gradient(90deg, #4FC3F7 76%, #26A69A 100%);
+  color: #fff !important;
+  border: 3px solid #01738e;
+  font-weight: 900;
+  font-size: 1.18rem;
+  box-shadow: 0 2px 8px #01738e36;
+  text-shadow: 0 2px 7px #0007, 0 0px 1px #26a69a;
+  letter-spacing: .6px;
+  min-width: 120px;
+  outline: none;
+  transition: background .18s, color .18s, border .12s;
+}
+.btn-reminder-later:hover, .btn-reminder-later:active, .btn-reminder-later:focus {
+  background: #1A384A !important;
+  color: #FFF8E1 !important;
+  border-color: #4FC3F7;
+}
+
+/* Large modal button tweaks (shared for both Log Now and Later) */
+.btn-large {
+  font-size: 1.13rem;
+  font-weight: 800;
+  padding: 13px 32px;
+}
+
 
 /* Dashboard/Stats styles */
 .mood-trend-bar {
