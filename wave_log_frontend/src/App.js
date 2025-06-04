@@ -628,20 +628,21 @@ export default function App() {
     img.src = heroImageUrl;
   }, [heroImageUrl]);
 
+  // Prefer the ocean image, fallback to gradient only if not available
   const oceanHeroBG = useMemo(() => ({
-    minHeight: '235px',
+    minHeight: '250px',
     width: '100%',
     backgroundImage: oceanImgExists
-      ? `linear-gradient(120deg, #0074ba 12%, #026b798e 65%, #26a69ad3 100%), url('${heroImageUrl}')`
+      ? `linear-gradient(120deg, #002640bb 9%, #016b7fa0 68%, #26A69Aa2 100%), url('${heroImageUrl}')`
       : 'linear-gradient(120deg, #0074ba 12%, #026b798e 65%, #26a69ad3 100%)',
-    backgroundSize: 'cover',
+    backgroundSize: oceanImgExists ? 'cover, cover' : 'cover',
+    backgroundBlendMode: oceanImgExists ? 'overlay' : undefined,
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    // Extra fallback color just in case
     backgroundColor: '#01748C'
   }), [heroImageUrl, oceanImgExists]);
 
