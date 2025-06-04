@@ -7,7 +7,7 @@
   --mood-bg: #E1F7FA;
   --wave-shadow: 0 1px 7px #01738e28, 0 3px 22px #4fc3f71c;
   /* Additional surf/ocean themed */
-  --ocean-hero-bg: url('/assets/ocean-hero.jpg');
+  /* --ocean-hero-bg removed: handled inline in component for build compatibility */
   --ocean-overlay: linear-gradient(120deg, #002640bb 0%, #026b798e 70%, #26a69aa2 100%);
   --surf-icons-color: #fffde4;
   /* Legacy/colors used in template */
@@ -34,7 +34,8 @@ body {
   position: relative;
   min-height: 280px;
   width: 100vw;
-  background-image: var(--ocean-hero-bg), var(--ocean-overlay);
+  /* background image handled in App.js as inline style for build path safety */
+  /* background-image: var(--ocean-hero-bg), var(--ocean-overlay); */
   background-size: cover, cover;
   background-blend-mode: overlay;
   background-repeat: no-repeat;
