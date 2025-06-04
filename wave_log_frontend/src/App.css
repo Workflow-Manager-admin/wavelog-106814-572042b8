@@ -324,3 +324,40 @@ select:focus {
 .hero, .subtitle, .description, .title {
   display: none !important;
 }
+
+/* Themed surf/sun icon block styles (can be used within nav/dashboard) */
+.surf-icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background: linear-gradient(120deg,#4fc3f7 60%,#26a69a 100%);
+  color: #fff;
+  box-shadow: 0 1.5px 9px #26a69a33;
+  padding: 9px 16px;
+  font-size: 2rem;
+  margin-right: 14px;
+  border: 2.5px solid #fffdf3a6;
+  vertical-align: bottom;
+  position: relative;
+  z-index: 2;
+}
+
+/* Add a general text shadow for titles/descriptions over busy backgrounds */
+.surf-title-glow {
+  color: #fff;
+  text-shadow: 0 4px 26px #027f89bb, 0 .5px 1px #01657173;
+  letter-spacing: .05em;
+}
+
+/* Ocean blur overlay for extra contrast */
+.ocean-blur-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(140deg, #01567Ecc 20%, #15777Ebb 90%);
+  opacity: 0.83;
+  filter: blur(2.4px);
+  z-index: 1;
+  pointer-events: none;
+}
