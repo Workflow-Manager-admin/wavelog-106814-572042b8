@@ -647,18 +647,18 @@ export default function App() {
 
   // Compose the main screen based on view
   let mainContent = null;
-  if (view === 'list') {
-    // SessionList "primary section" with optional ocean pattern bg
-    // Use an ocean section pattern if available; fallback to nothing.
-    const sectionBgUrl = process.env.PUBLIC_URL + '/assets/ocean-bg-pattern.png';
-    const [sectionImgExists, setSectionImgExists] = useState(true);
-    useEffect(() => {
-      const img = new window.Image();
-      img.onload = () => setSectionImgExists(true);
-      img.onerror = () => setSectionImgExists(false);
-      img.src = sectionBgUrl;
-    }, [sectionBgUrl]);
+  // Section wave pattern background (for SessionList area)
+  const sectionBgUrl = process.env.PUBLIC_URL + '/assets/ocean-bg-pattern.png';
+  const [sectionImgExists, setSectionImgExists] = useState(true);
+  useEffect(() => {
+    const img = new window.Image();
+    img.onload = () => setSectionImgExists(true);
+    img.onerror = () => setSectionImgExists(false);
+    img.src = sectionBgUrl;
+    // eslint-disable-next-line
+  }, [sectionBgUrl]);
 
+  if (view === 'list') {
     mainContent = (
       <div
         style={{
