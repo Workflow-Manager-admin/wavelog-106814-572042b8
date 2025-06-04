@@ -43,15 +43,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 8px 36px #113a5a23, 0 2.5px 20px #196b7e22;
 }
 .surf-hero-content {
   position: relative;
   z-index: 2;
   color: #fff;
-  text-shadow: 0 4px 26px #027f89bb, 0 1px 2px #01657173;
-  padding: 2.5rem 1.5rem 1rem 1.5rem;
+  text-shadow:
+    0 4px 22px #034d5fcc,
+    0 2px 7px #016571c8,
+    0 1px 1px #013857ba,
+    0 0 2px #113e85e6,
+    0 0 10px #094559bb;
+  padding: 2.9rem 1.5rem 1.3rem 1.5rem;
   text-align: center;
   max-width: 760px;
+  font-size: 1.18rem;
 }
 .surf-hero-overlay {
   position: absolute;
@@ -87,13 +94,15 @@ body {
 /* Oceanic session card */
 .session-card {
   transition: box-shadow 0.12s, transform 0.09s;
-  /* Engaging card background & shadow for theme */
-  background: rgba(255,248,225,0.92);
+  /* Remove background for flexibility, overlay & strong gradient ensures readability */
+  background: none;
   border-left: 7px solid #26a69a;
   box-shadow: 0 4px 18px #01738e21, 0 1.5px 9px #26a69a13;
   border-radius: 14px;
   margin-bottom: 18px;
   will-change: transform, box-shadow;
+  overflow: hidden;
+  position: relative;
 }
 .session-card:focus,
 .session-card:hover {
