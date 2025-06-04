@@ -1,9 +1,28 @@
 :root {
+  /* --- SurfSync Oceanic Palette --- */
+  --surf-blue: #4FC3F7;
+  --surf-sandy: #FFF8E1;
+  --surf-teal: #26A69A;
+  --dark-text: #1a384a;
+  --mood-bg: #E1F7FA;
+  --wave-shadow: 0 1px 7px #01738e28, 0 3px 22px #4fc3f71c;
+  /* Legacy/colors used in template */
   --base-light: #00ffff;
   --base-dark: #00008b;
   --text-color: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.7);
   --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* "Wave" BG for header (oceanic) */
+body {
+  margin: 0;
+  font-family: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  background: linear-gradient(170deg, #4FC3F7 0%, #26A69A 77%, #FFF8E1 100%);
+  color: var(--dark-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
 body {
