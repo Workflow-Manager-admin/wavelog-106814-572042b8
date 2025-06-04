@@ -749,24 +749,7 @@ export default function App() {
                 Log Now
               </button>
               <button
-                className="btn btn-large"
-                style={{
-                  background: 'linear-gradient(90deg, #4FC3F7 76%, #26A69A 100%)',
-                  color: '#fff',
-                  border: '3px solid #01738e',
-                  fontWeight: 900,
-                  minWidth: 120,
-                  fontSize: '1.17rem',
-                  boxShadow: '0 2px 9px #01738e36',
-                  textShadow: '0 2px 7px #0007, 0 0px 1px #26a69a',
-                  letterSpacing: ".6px",
-                  outline: 'none',
-                  transition: 'background .18s, color .18s, border .12s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 8
-                }}
+                className="btn btn-large btn-reminder-later"
                 onClick={() => {
                   setReminderOpen(false);
                   sessionStorage.setItem('surfReminderDismissed', '1');
@@ -779,14 +762,6 @@ export default function App() {
                 }}
                 tabIndex={0}
                 aria-label="Later (dismiss reminder popup)"
-                onMouseOver={e => {
-                  e.currentTarget.style.background = '#1A384A';
-                  e.currentTarget.style.color = '#FFF8E1';
-                }}
-                onMouseOut={e => {
-                  e.currentTarget.style.background = 'linear-gradient(90deg, #4FC3F7 76%, #26A69A 100%)';
-                  e.currentTarget.style.color = '#fff';
-                }}
               >
                 <span role="img" aria-label="Clock">⏰</span>
                 Later
