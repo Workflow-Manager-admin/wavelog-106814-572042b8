@@ -130,8 +130,9 @@ body {
   transition: box-shadow 0.15s;
   box-shadow: 0 7px 42px #01738e33, 0 1.5px 9px #26a69a25;
   border-radius: 19px;
-  background: linear-gradient(125deg, #fff8e1de 90%, #e1f7fae8 100%);
+  background: none; /* Ensured in component, enforced here */
   overflow: hidden;
+  position: relative;
 }
 @keyframes fadein {
   from { opacity:0; transform: translateY(24px);}
