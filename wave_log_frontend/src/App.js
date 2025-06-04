@@ -65,11 +65,11 @@ const TIDES = ['Low', 'Mid', 'High'];
  * PUBLIC_INTERFACE
  * useReminder - Prompts if no session is logged for today and
  * if the reminder wasn't dismissed for this session (uses sessionStorage).
+ * Now updated: Handles re-initialization if sessionStorage changes!
  */
 function useReminder(sessions, onPrompt) {
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
-    // If we stored dismissal this session, don't prompt again
     const dismissed = sessionStorage.getItem('surfReminderDismissed');
     if (!sessions.some((s) => s.date === today) && !dismissed) {
       const reminder = setTimeout(() => {
@@ -78,6 +78,18 @@ function useReminder(sessions, onPrompt) {
       return () => clearTimeout(reminder);
     }
   }, [sessions, onPrompt]);
+
+  // Listen to sessionStorage changes (from other tabs, etc.)
+  useEffect(() => {
+    function handleStorage(e) {
+      if (e.key === "surfReminderDismissed") {
+        // could choose to update locally if needed.
+        // Optionally, onPrompt(false); // force close modal
+      }
+    }
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
 }
 
 // ==== UTILS ====
@@ -532,10 +544,35 @@ export default function App() {
   const [view, setView] = useState('list'); // 'list' | 'details' | 'log' | 'edit' | 'dashboard'
   const [selected, setSelected] = useState(null);
   const [filters, setFilters] = useState({ spot: 'All', board: 'All', mood: 'All' });
-  const [reminderOpen, setReminderOpen] = useState(false);
+  // Reminder modal state, initially checks sessionStorage to sync up
+  const [reminderOpen, setReminderOpen] = useState(() => {
+    return !sessionStorage.getItem('surfReminderDismissed');
+  });
+
+  // Ensure that opening/closing modal also (re)syncs with sessionStorage: truly persistent in-session
+  useEffect(() => {
+    // Listen for dismissal event (e.g., user hit Later elsewhere or in new tab)
+    function storageListener(e) {
+      if (e.key === 'surfReminderDismissed') {
+        setReminderOpen(!e.newValue ? true : false);
+      }
+    }
+    window.addEventListener('storage', storageListener);
+    return () => window.removeEventListener('storage', storageListener);
+  }, []);
+
+  // When the modal is opened, re-check sessionStorage in case user cleared session
+  useEffect(() => {
+    if (!reminderOpen && !sessionStorage.getItem('surfReminderDismissed')) {
+      setReminderOpen(true);
+    }
+  }, []); // on mount only
 
   // Reminder hook for daily logging
-  useReminder(sessions, () => setReminderOpen(true));
+  useReminder(sessions, () => {
+    // Modal will display only if not dismissed for this session
+    if (!sessionStorage.getItem('surfReminderDismissed')) setReminderOpen(true);
+  });
 
   // Routing logic
   function goHome() {
