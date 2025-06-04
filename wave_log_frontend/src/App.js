@@ -130,8 +130,7 @@ function Navbar({ onGoHome, onShowStats }) {
 /**
  * PUBLIC_INTERFACE
  * SessionCard
- * Adds a dark overlay gradient below content for contrast when layered over any image/bg,
- * ensures high color contrast and text shadow for readability.
+ * Always includes a surf-overlay-gradient for robust readability.
  */
 function SessionCard({ session, onClick }) {
   return (
@@ -143,8 +142,8 @@ function SessionCard({ session, onClick }) {
         borderRadius: 15,
         cursor: 'pointer',
         overflow: 'hidden',
-        background: 'none',
         minHeight: 98,
+        background: 'none',
         boxShadow: '0 2.5px 13px #002E4E23, 0 2.5px 18px #26a69a19',
         borderLeft: `7px solid #26A69A`,
         transition: 'transform .07s',
@@ -155,18 +154,8 @@ function SessionCard({ session, onClick }) {
       onClick={onClick}
       onKeyPress={e => { if (e.key === 'Enter') onClick(); }}
     >
-      {/* Semi-transparent overlay for readability */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(92deg, #013857e7 10%, #039be5cc 82%, #23bac777 100%)',
-          opacity: 0.82,
-          zIndex: 1,
-          pointerEvents: 'none'
-        }}
-        aria-hidden="true"
-      />
+      {/* Overlay for strong text contrast */}
+      <div className="surf-overlay-gradient strong" aria-hidden="true" />
       <div style={{ position: 'relative', zIndex: 2 }}>
         <div
           style={{
@@ -179,19 +168,19 @@ function SessionCard({ session, onClick }) {
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div
               style={{
-                fontWeight: 700,
+                fontWeight: 800,
                 color: '#fff',
                 textShadow:
-                  '0 2px 9px #01455c7c, 0 1px 2px #fff, 0 0.5px 2px #17c3d198, 0 1.5px 9px #012957',
-                fontSize: 18,
-                letterSpacing: '.04em'
+                  '0 4px 18px #012957bf, 0 1.5px 3.5px #fff, 0 1.5px 11px #01759e',
+                fontSize: 20,
+                letterSpacing: '.07em'
               }}
             >
               {session.spot}
             </div>
             <div
               style={{
-                fontSize: 14,
+                fontSize: 15,
                 color: '#bbf3fa',
                 textShadow: '0 1.2px 7px #013e5b7d'
               }}
@@ -217,9 +206,9 @@ function SessionCard({ session, onClick }) {
             display: 'flex',
             justifyContent: 'space-between',
             color: '#fffde9',
-            textShadow: '0 1px 6px #026b798a, 0 0.5px 1px #01c7e640',
-            fontWeight: 500,
-            fontSize: 15
+            textShadow: '0 2px 8px #01446a95, 0 0.5px 2px #01c7e699',
+            fontWeight: 600,
+            fontSize: 17
           }}
         >
           <div>
@@ -254,20 +243,8 @@ function SessionDetail({ session, onBack, onEdit, onDelete }) {
         overflow: 'hidden'
       }}
     >
-      {/* Overlay for high contrast */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(120deg, #043c5fda 17%, #24b0aaf5 90%, #fff3 100%)',
-          filter: 'blur(0.5px)',
-          zIndex: 1,
-          opacity: 0.84,
-          pointerEvents: 'none'
-        }}
-        aria-hidden="true"
-      />
-      <div style={{ position: 'relative', zIndex: 2, padding: 32 }}>
+      <div className="surf-overlay-gradient strong" aria-hidden="true" />
+      <div style={{ position: 'relative', zIndex: 2, padding: 38 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <button
             className="btn"
@@ -408,11 +385,27 @@ function LogSessionForm({ onSubmit, onCancel, initial }) {
   }
   return (
     <form className="log-session-form" style={{
-      maxWidth: 410, background:'#FFF8E1', margin:'50px auto', borderRadius:16, 
-      boxShadow:'0 4px 32px #01738e2c', padding: '30px 32px 24px 32px'
+      maxWidth: 410,
+      margin: '50px auto',
+      borderRadius: 16,
+      boxShadow: '0 4px 32px #01738e2c',
+      padding: '34px 38px 28px 38px',
+      position: 'relative',
+      background: 'none',
+      overflow: 'hidden'
     }}
       onSubmit={e => { e.preventDefault(); onSubmit(form); }}>
-      <h2 style={{textAlign:'center', color:'#26A69A', marginBottom:18}}>
+      {/* Overlay for always-readable content */}
+      <div className="surf-overlay-gradient dark" aria-hidden="true" />
+      <h2 style={{
+        textAlign: 'center',
+        color: '#fff',
+        marginBottom: 18,
+        fontSize: '1.45rem',
+        fontWeight: 900,
+        letterSpacing: '0.04em',
+        textShadow: '0 4px 18px #1c57a985, 0 2px 3px #fff'
+      }}>
         {initial ? 'Edit Session' : 'Log New Session'}
       </h2>
       {/* Date */}
