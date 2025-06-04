@@ -614,31 +614,90 @@ export default function App() {
   }
   // For ocean theme background and subtle wave image
   // Moved complex backgrounds to inline style in the hero/above main content.
+
+  // --- HERO/HEADER: Prefer asset in public/assets, fallback to gradient if missing ---
+  // Try pre-loading the image to check if it exists. If not, use gradient only.
   const heroImageUrl = process.env.PUBLIC_URL + '/assets/ocean-hero.jpg';
-  const oceanHeroBG = {
+
+  // Inline JS image existence check (run once, result memoized)
+  const [oceanImgExists, setOceanImgExists] = useState(true);
+  useEffect(() => {
+    const img = new window.Image();
+    img.onload = () => setOceanImgExists(true);
+    img.onerror = () => setOceanImgExists(false);
+    img.src = heroImageUrl;
+  }, [heroImageUrl]);
+
+  const oceanHeroBG = useMemo(() => ({
     minHeight: '235px',
     width: '100%',
-    backgroundImage: `linear-gradient(120deg, #0074ba 12%, #026b798e 65%, #26a69ad3 100%), url('${heroImageUrl}')`,
+    backgroundImage: oceanImgExists
+      ? `linear-gradient(120deg, #0074ba 12%, #026b798e 65%, #26a69ad3 100%), url('${heroImageUrl}')`
+      : 'linear-gradient(120deg, #0074ba 12%, #026b798e 65%, #26a69ad3 100%)',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative'
-  };
+    position: 'relative',
+    // Extra fallback color just in case
+    backgroundColor: '#01748C'
+  }), [heroImageUrl, oceanImgExists]);
 
   // Compose the main screen based on view
   let mainContent = null;
   if (view === 'list') {
+    // SessionList "primary section" with optional ocean pattern bg
+    // Use an ocean section pattern if available; fallback to nothing.
+    const sectionBgUrl = process.env.PUBLIC_URL + '/assets/ocean-bg-pattern.png';
+    const [sectionImgExists, setSectionImgExists] = useState(true);
+    useEffect(() => {
+      const img = new window.Image();
+      img.onload = () => setSectionImgExists(true);
+      img.onerror = () => setSectionImgExists(false);
+      img.src = sectionBgUrl;
+    }, [sectionBgUrl]);
+
     mainContent = (
-      <SessionList
-        sessions={sessions}
-        onSelect={openSessionDetail}
-        filters={filters}
-        setFilters={setFilters}
-        onAdd={openLogForm}
-      />
+      <div
+        style={{
+          position: 'relative',
+          minHeight: 320,
+          backgroundImage: sectionImgExists
+            ? `url('${sectionBgUrl}')`
+            : 'linear-gradient(170deg, #4FC3F7 0%, #26A69A 68%, #FFF8E1 100%)',
+          backgroundSize: sectionImgExists ? 'cover' : 'auto',
+          backgroundPosition: sectionImgExists ? 'center top' : 'center',
+          backgroundRepeat: 'no-repeat',
+          borderRadius: 19,
+          boxShadow: '0 2px 32px #02768a25',
+          marginBottom: 16,
+        }}
+        aria-label={sectionImgExists ? 'waves background section' : undefined}
+      >
+        {/* Overlay to ensure text remains readable */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: sectionImgExists
+              ? 'linear-gradient(120deg, #003957cc 10%, #026b798e 80%, #1ca8bb2b 100%)'
+              : 'none',
+            zIndex: 0,
+            borderRadius: 19,
+          }}
+        />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <SessionList
+            sessions={sessions}
+            onSelect={openSessionDetail}
+            filters={filters}
+            setFilters={setFilters}
+            onAdd={openLogForm}
+          />
+        </div>
+      </div>
     );
   } else if (view === 'details') {
     const session = sessions.find(s => s.id === selected);
