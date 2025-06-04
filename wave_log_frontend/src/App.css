@@ -131,17 +131,26 @@ body {
 /* Log Session Form */
 .log-session-form {
   animation: fadein 0.6s;
+  background: linear-gradient(120deg,#FFF8E1f4 85%,#e1f7faf1 100%);
+  border-radius: 17px;
+  box-shadow: 0 5px 32px #0e7b8e24, 0 1.5px 5px #0e7b8e27;
+  padding: 32px 30px 22px 30px;
+  max-width: 445px;
+  margin: 42px auto;
 }
 .form-row {
   margin-bottom: 17px;
   display: flex;
   align-items: center;
   gap: 16px;
+  position: relative;
 }
 .form-row label {
   width: 110px;
-  font-weight: 500;
+  font-weight: 600;
   color: #4fc3f7;
+  letter-spacing: .1px;
+  font-size:1.09rem;
 }
 .log-session-form input[type="date"],
 .log-session-form select,
@@ -150,14 +159,21 @@ body {
   padding: 5px 7px;
   background: #e1f7fa;
   color: #02586a;
+  border-radius: 5px;
+  border: 1.2px solid #26a69a88;
 }
 .log-session-form textarea {
   font-family: inherit;
   font-size: 1rem;
   background: #e1f7fa;
+  border-radius: 6px;
+  border: 1.1px solid #4FC3F7;
+  min-height: 54px;
+  padding: 7px 9px;
 }
 .mood-inputs label {
   margin-right: 0;
+  border-radius: 10px;
 }
 
 /* Buttons */
@@ -223,11 +239,20 @@ body {
 
 
 /* Dashboard/Stats styles */
+.stats-card, .mood-trend-bar-panel {
+  background: linear-gradient(120deg,#FFF8E1fc 80%,#e1f7fafd 100%);
+  border-radius: 14px;
+  box-shadow: 0 4px 32px #01738e18;
+  padding: 23px 30px;
+}
 .mood-trend-bar {
   align-items: flex-end;
+  min-height: 40px;
+  gap: 2px;
 }
 .mood-trend-bar > div {
-  box-shadow: 0 1px 5px #26a69a1c;
+  box-shadow: 0 1px 6px #4fc3f72f, 0 1.5px 5px #26a69a19;
+  border-radius: 7px;
 }
 
 /* Filtering selects */
@@ -254,14 +279,34 @@ select:focus {
   display: flex;
   flex-direction: column;
   background: none;
+  /* Setup for ocean background with mobile/desktop tastefulness */
+  background:
+    linear-gradient(170deg, #4FC3F7 0%, #26A69A 68%, #FFF8E1 100%),
+    url('/assets/ocean-bg-pattern.png');
+  background-size: cover, cover;
+  background-position: center, top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* fallback for no image */
 }
 
 .container {
-  max-width: 900px;
+  max-width: 950px;
   margin: 0 auto;
   padding: 0 24px;
   width: 100%;
   box-sizing: border-box;
+  background: rgba(255,255,255,0.02);
+}
+
+@media (max-width: 700px) {
+  .container {
+    padding: 0 7px;
+  }
+  .session-detail-card, .log-session-form, .stats-card {
+    padding: 12px 2vw;
+    min-width: unset;
+  }
 }
 
 /* Responsive - shrink for mobile */
